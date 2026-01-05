@@ -1,7 +1,6 @@
-import { FC } from "react";
-interface PromInputProps {
-    name: string;
-    type?: string;
+import React, { FC } from "react";
+import { CommonPromComponentProps } from "./types";
+interface PromInputProps extends CommonPromComponentProps, React.ComponentProps<"input"> {
     label?: string;
 }
 declare const PromInput: FC<PromInputProps>;

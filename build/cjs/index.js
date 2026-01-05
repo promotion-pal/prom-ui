@@ -572,7 +572,7 @@ const parseAsync = /* @__PURE__*/ _parseAsync($ZodRealError);
 function t(r,e){try{var o=r();}catch(r){return e(r)}return o&&o.then?o.then(void 0,e):o}function s(r,e){for(var n={};r.length;){var t=r[0],s=t.code,i=t.message,a=t.path.join(".");if(!n[a])if("unionErrors"in t){var u=t.unionErrors[0].errors[0];n[a]={message:u.message,type:u.code};}else n[a]={message:i,type:s};if("unionErrors"in t&&t.unionErrors.forEach(function(e){return e.errors.forEach(function(e){return r.push(e)})}),e){var c=n[a].types,f=c&&c[t.code];n[a]=reactHookForm.appendErrors(a,e,n,s,f?[].concat(f,t.message):t.message);}r.shift();}return n}function i(r,e){for(var n={};r.length;){var t=r[0],s=t.code,i=t.message,a=t.path.join(".");if(!n[a])if("invalid_union"===t.code&&t.errors.length>0){var u=t.errors[0][0];n[a]={message:u.message,type:u.code};}else n[a]={message:i,type:s};if("invalid_union"===t.code&&t.errors.forEach(function(e){return e.forEach(function(e){return r.push(e)})}),e){var c=n[a].types,f=c&&c[t.code];n[a]=reactHookForm.appendErrors(a,e,n,s,f?[].concat(f,t.message):t.message);}r.shift();}return n}function a(o$1,a,u){if(void 0===u&&(u={}),function(r){return "_def"in r&&"object"==typeof r._def&&"typeName"in r._def}(o$1))return function(n,i,c){try{return Promise.resolve(t(function(){return Promise.resolve(o$1["sync"===u.mode?"parse":"parseAsync"](n,a)).then(function(e){return c.shouldUseNativeValidation&&o({},c),{errors:{},values:u.raw?Object.assign({},n):e}})},function(r){if(function(r){return Array.isArray(null==r?void 0:r.issues)}(r))return {values:{},errors:s$1(s(r.errors,!c.shouldUseNativeValidation&&"all"===c.criteriaMode),c)};throw r}))}catch(r){return Promise.reject(r)}};if(function(r){return "_zod"in r&&"object"==typeof r._zod}(o$1))return function(s,c,f){try{return Promise.resolve(t(function(){return Promise.resolve(("sync"===u.mode?parse:parseAsync)(o$1,s,a)).then(function(e){return f.shouldUseNativeValidation&&o({},f),{errors:{},values:u.raw?Object.assign({},s):e}})},function(r){if(function(r){return r instanceof $ZodError}(r))return {values:{},errors:s$1(i(r.issues,!f.shouldUseNativeValidation&&"all"===f.criteriaMode),f)};throw r}))}catch(r){return Promise.reject(r)}};throw new Error("Invalid input: not a Zod schema")}
 
 var PromFrom = function (_a) {
-    var children = _a.children, formSchema = _a.formSchema, _b = _a.defaultValues, defaultValues = _b === void 0 ? {} : _b, onSubmit = _a.onSubmit;
+    var children = _a.children, onSubmit = _a.onSubmit, formSchema = _a.formSchema, _b = _a.defaultValues, defaultValues = _b === void 0 ? {} : _b;
     var form = reactHookForm.useForm({
         resolver: a(formSchema),
         defaultValues: defaultValues,
@@ -583,14 +583,20 @@ var PromFormFiled = function (_a) {
     var props = tslib.__rest(_a, []);
     return jsxRuntimeExports.jsx(reactHookForm.Controller, tslib.__assign({}, props));
 };
+var PromMessage = function () {
+    var control = reactHookForm.useFormContext().control;
+    var errors = reactHookForm.useFormState({ control: control }).errors;
+    console.log(errors);
+    if (errors)
+        return jsxRuntimeExports.jsx("p", { children: "\u041E\u0448\u0438\u0431\u043A\u0430" });
+};
 
 var PromInput = function (_a) {
-    var name = _a.name, label = _a.label, _b = _a.type, type = _b === void 0 ? "text" : _b;
+    var name = _a.name, label = _a.label, _b = _a.type, type = _b === void 0 ? "text" : _b; tslib.__rest(_a, ["name", "label", "type"]);
     var control = reactHookForm.useFormContext().control;
-    console.log(control);
     return (jsxRuntimeExports.jsx(PromFormFiled, { control: control, name: name, render: function (_a) {
             var field = _a.field;
-            return (jsxRuntimeExports.jsxs("div", { className: "space-y-2", children: [label && (jsxRuntimeExports.jsx("label", { className: "block text-sm font-medium", children: label })), jsxRuntimeExports.jsx("input", tslib.__assign({}, field, { type: type, className: "border rounded px-3 py-2 w-full" }))] }));
+            return (jsxRuntimeExports.jsxs("div", { className: "space-y-2", children: [label && (jsxRuntimeExports.jsx("label", { className: "block text-sm font-medium", children: label })), jsxRuntimeExports.jsx("input", tslib.__assign({}, field, { type: type, className: "border rounded px-3 py-2 w-full" })), jsxRuntimeExports.jsx(PromMessage, {})] }));
         } }));
 };
 
@@ -3641,4 +3647,5 @@ function cn() {
 exports.PromFormFiled = PromFormFiled;
 exports.PromFrom = PromFrom;
 exports.PromInput = PromInput;
+exports.PromMessage = PromMessage;
 exports.cn = cn;

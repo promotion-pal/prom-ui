@@ -6,6 +6,8 @@ import {
   FormProvider,
   Path,
   useForm,
+  useFormContext,
+  useFormState,
   type ControllerProps,
   type FieldPath,
   type FieldValues,
@@ -57,6 +59,12 @@ const PromFormFiled = <
   return <Controller {...props} />;
 };
 
-type FormFieldNames<S extends z.ZodType<any, any, any>> = Path<z.output<S>>;
+const PromMessage = () => {
+  const { control } = useFormContext();
+  const { errors } = useFormState({ control });
+  console.log(errors);
 
-export { PromFrom, PromFormFiled, type FormFieldNames };
+  if (errors) return <p>Ошибка</p>;
+};
+
+export { PromFrom, PromMessage, PromFormFiled };
