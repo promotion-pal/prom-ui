@@ -1,6 +1,17 @@
-import { FC } from "react";
+import { type VariantProps } from "class-variance-authority";
+import * as React from "react";
 import { CommonPromComponentProps } from "./types";
-interface PromButton extends CommonPromComponentProps {
+declare const buttonVariants: (props?: {
+    variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link";
+    size?: "default" | "sm" | "lg" | "icon" | "icon-sm" | "icon-lg";
+} & import("class-variance-authority/dist/types").ClassProp) => string;
+declare const skeletonVariants: (props?: {
+    variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link";
+    size?: "default" | "sm" | "lg" | "icon" | "icon-sm" | "icon-lg";
+} & import("class-variance-authority/dist/types").ClassProp) => string;
+interface PromButtonProps extends React.ComponentProps<"button">, VariantProps<typeof buttonVariants>, CommonPromComponentProps {
+    asChild?: boolean;
+    loadingText?: string;
 }
-declare const PromButton: FC<PromButton>;
-export { PromButton };
+declare function PromButton({ size, variant, children, disabled, className, loadingText, isLoad, asChild, skeleton, ...props }: PromButtonProps): import("react/jsx-runtime").JSX.Element;
+export { PromButton, buttonVariants, skeletonVariants };

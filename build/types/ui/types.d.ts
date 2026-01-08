@@ -4,4 +4,5 @@ export interface CommonPromStyle {
 }
 export interface CommonPromComponentProps {
     isLoad?: boolean;
+    skeleton?: boolean;
 }
